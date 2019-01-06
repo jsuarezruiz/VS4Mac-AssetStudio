@@ -6,6 +6,8 @@
 * Create the Android icons in all the necessary sizes based on an image.
 * Create the iOS icons in all necessary sizes based on an image.
 
+![Color Helper](images/compress-images.png)
+
 ## Copyright and license
 
 Code released under the [MIT license](https://opensource.org/licenses/MIT).
