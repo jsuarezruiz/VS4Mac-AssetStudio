@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Addin
+    id = "com.jsuarezruiz.assetstudio">
+    <Header>
+        <Name>Asset Studio Addin</Name>
+        <Description>VS4Mac addin with functionality related to assets management.</Description>
+        <Author>Javier Suárez</Author>
+        <Copyright>Javier Suárez</Copyright>
+        <Url>https://github.com/jsuarezruiz/VSMac-AssetStudio</Url>
+    </Header>
+    <Extension 
+        path="/MonoDevelop/Ide/Commands">
+        <Command 
+            id="AssetStudio.Commands.CompressImageCommand" 
+            _label="Compress Image" 
+            defaultHandler="VS4Mac.AssetStudio.Commands.CompressImageCommand" />
+        <Command 
+            id="AssetStudio.Commands.CompressImagesCommand" 
+            _label="Compress Images" 
+            defaultHandler="VS4Mac.AssetStudio.Commands.CompressImagesCommand" />
+    </Extension>   
+    <Extension 
+        path="/MonoDevelop/Ide/ContextMenu/ProjectPad">
+        <CommandItem 
+            id="AssetStudio.Commands.CompressImageCommand" />        
+        <CommandItem 
+            id="AssetStudio.Commands.CompressImagesCommand" />  
+    </Extension>
+    <Extension 
+        path = "/MonoDevelop/Ide/GlobalOptionsDialog/Other">
+        <Section 
+            id = "Asset Studio" 
+            _label = "Asset Studio" 
+            class = "VS4Mac.AssetStudio.Views.CompressImageSettingsPanel" />
+    </Extension>
+</Addin>
