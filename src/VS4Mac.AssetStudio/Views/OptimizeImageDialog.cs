@@ -11,7 +11,7 @@ using Xwt.Drawing;
 
 namespace VS4Mac.AssetStudio.Views
 {
-    public class CompressImageDialog : Xwt.Dialog
+    public class OptimizeImageDialog : Xwt.Dialog
     {
         VBox _mainBox;
         HBox _contentBox;
@@ -39,7 +39,7 @@ namespace VS4Mac.AssetStudio.Views
         TinifyService _tinifyService;
         SettingsService _settingsService;
 
-        public CompressImageDialog(ProjectFile projectFile)
+        public OptimizeImageDialog(ProjectFile projectFile)
         {
             Init(projectFile);
             BuildGui(); 
@@ -57,7 +57,7 @@ namespace VS4Mac.AssetStudio.Views
             _settingsService = new SettingsService();
             _tinifyService = new TinifyService();
 
-            Title = "Compress Image";
+            Title = "Optimize Image";
 
             _mainBox = new VBox
             {
@@ -131,10 +131,10 @@ namespace VS4Mac.AssetStudio.Views
 
             _closeButton = new Button("Close");
 
-            _compressButton = new Button("Compress")
+            _compressButton = new Button("Optimize")
             {
-                BackgroundColor = MonoDevelop.Ide.Gui.Styles.BaseSelectionBackgroundColor,
-                LabelColor = MonoDevelop.Ide.Gui.Styles.BaseSelectionTextColor
+                BackgroundColor = Styles.BaseSelectionBackgroundColor,
+                LabelColor = Styles.BaseSelectionTextColor
             };
         }
 
@@ -226,7 +226,7 @@ namespace VS4Mac.AssetStudio.Views
                 return;
             }
 
-            var progressMonitor = IdeApp.Workbench.ProgressMonitors.GetStatusProgressMonitor("Compressing images...", Stock.StatusSolutionOperation, false, true, false);
+            var progressMonitor = IdeApp.Workbench.ProgressMonitors.GetStatusProgressMonitor("Optimizing images...", Stock.StatusSolutionOperation, false, true, false);
 
             Loading(true);
 
@@ -234,22 +234,22 @@ namespace VS4Mac.AssetStudio.Views
 
             try
             {
-                progressMonitor.Log.WriteLine($"Compressing {Path.GetFileName(filePath)}...");
+                progressMonitor.Log.WriteLine($"Optimizing {Path.GetFileName(filePath)}...");
 
                 var originalSize = new FileInfo(filePath).Length;
 
-                var source = await _tinifyService.CompressAsync(filePath);
+                var source = await _tinifyService.OptimizeAsync(filePath);
                 _tinifyService.DownloadImage(source.Output.Url, filePath);
                 var finalSize = source.Output.Size;
 
-                progressMonitor.Log.WriteLine($"Compression complete. {Path.GetFileName(filePath)} was {ImageHelper.GetImageSize(originalSize)}, now {ImageHelper.GetImageSize(finalSize)}");
+                progressMonitor.Log.WriteLine($"Optimization complete. {Path.GetFileName(filePath)} was {ImageHelper.GetImageSize(originalSize)}, now {ImageHelper.GetImageSize(finalSize)}");
 
                 LoadResults(filePath, originalSize, finalSize);
                 Compressed = true;
             }
             catch (Exception ex)
             {
-                progressMonitor.Log.WriteLine($"An error occurred compressing {Path.GetFileName(filePath)}: {ex.Message}");
+                progressMonitor.Log.WriteLine($"An error occurred optimizing {Path.GetFileName(filePath)}: {ex.Message}");
                 LoadErrors(filePath);
                 success = false;
             }
@@ -260,7 +260,7 @@ namespace VS4Mac.AssetStudio.Views
 
             if (success)
             {
-                progressMonitor.ReportSuccess("Images compressed successfully.");
+                progressMonitor.ReportSuccess("Images optimized successfully.");
             }
             else
             {
@@ -279,7 +279,7 @@ namespace VS4Mac.AssetStudio.Views
         void LoadErrors(string filePath)
         {
             _resultTitleLabel.Text = "Oops, an error ocurred.";
-            _resultContentLabel.Text = $"An error occurred compressing {Path.GetFileName(filePath)}";
+            _resultContentLabel.Text = $"An error occurred optimizing {Path.GetFileName(filePath)}";
         }
     }
 }

@@ -1,18 +1,18 @@
 ﻿using MonoDevelop.Components.Commands;
 using MonoDevelop.Ide;
-using MonoDevelop.Ide.Gui.Pads.ProjectPad;
+using MonoDevelop.Projects;
 using VS4Mac.AssetStudio.Helpers;
 using VS4Mac.AssetStudio.Views;
 
 namespace VS4Mac.AssetStudio.Commands
 {
-    public class CompressImagesCommand : CommandHandler
+    public class OptimizeImageCommand : CommandHandler
     {
         protected override void Run()
         {
-            var projectFolder = IdeApp.ProjectOperations.CurrentSelectedItem as ProjectFolder;
+            var projectFile = IdeApp.ProjectOperations.CurrentSelectedItem as ProjectFile;
 
-            using (var compressImageDialog = new CompressImagesDialog(projectFolder))
+            using (var compressImageDialog = new OptimizeImageDialog(projectFile))
             {
                 compressImageDialog.Run(Xwt.MessageDialog.RootWindow);
             }
@@ -23,15 +23,15 @@ namespace VS4Mac.AssetStudio.Commands
             info.Visible =
                 IsWorkspaceOpen()
                 && ProjectHelper.IsProjectReady()
-                && FolderContainsImage();
+                && SelectedItemIsImage();
         }
 
         bool IsWorkspaceOpen() => IdeApp.Workspace.IsOpen;
 
-        bool FolderContainsImage()
+        bool SelectedItemIsImage()
         {
-            var projectFolder = IdeApp.ProjectOperations.CurrentSelectedItem as ProjectFolder;
-            return FileHelper.FolderContainsImage(projectFolder);
+            var projectFile = IdeApp.ProjectOperations.CurrentSelectedItem as ProjectFile;
+            return FileHelper.IsImageFile(projectFile);
         }
     }
 }

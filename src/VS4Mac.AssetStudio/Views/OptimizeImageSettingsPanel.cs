@@ -4,9 +4,9 @@ using VS4Mac.AssetStudio.Controls;
 
 namespace VS4Mac.AssetStudio.Views
 {
-    public class CompressImageSettingsPanel : OptionsPanel
+    public class OptimizeImageSettingsPanel : OptionsPanel
     {
-        CompressImageSettingsWidget _widget;
+        OptimizeImageSettingsWidget _widget;
 
         public override void ApplyChanges()
         {
@@ -15,7 +15,7 @@ namespace VS4Mac.AssetStudio.Views
 
         public override Control CreatePanelWidget()
         {
-            _widget = new CompressImageSettingsWidget();
+            _widget = new OptimizeImageSettingsWidget();
 
             return new XwtControl(_widget);
         }

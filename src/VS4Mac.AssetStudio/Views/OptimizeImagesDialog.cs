@@ -10,14 +10,14 @@ using Xwt;
 
 namespace VS4Mac.AssetStudio.Views
 {
-    public class CompressImageInfo
+    public class OptimizeImageInfo
     {
         public int ImageId { get; set; }
         public string Path { get; set; }
         public string Weight { get; set; }
     }
 
-    public class CompressImagesDialog : Dialog
+    public class OptimizeImagesDialog : Dialog
     {
         VBox _mainBox;
         ListView _filesView;
@@ -36,7 +36,7 @@ namespace VS4Mac.AssetStudio.Views
         TinifyService _tinifyService;
         SettingsService _settingsService;
 
-        public CompressImagesDialog(ProjectFolder projectFolder)
+        public OptimizeImagesDialog(ProjectFolder projectFolder)
         {
             Init(projectFolder);
             BuildGui();
@@ -52,7 +52,7 @@ namespace VS4Mac.AssetStudio.Views
             _settingsService = new SettingsService();
             _tinifyService = new TinifyService();
 
-            Title = "Compress Images";
+            Title = "Optimize Images";
 
             _mainBox = new VBox
             {
@@ -77,7 +77,7 @@ namespace VS4Mac.AssetStudio.Views
 
             _closeButton = new Button("Close");
 
-            _compressButton = new Button("Compress")
+            _compressButton = new Button("Optimize")
             {
                 BackgroundColor = Styles.BaseSelectionBackgroundColor,
                 LabelColor = Styles.BaseSelectionTextColor
@@ -93,7 +93,7 @@ namespace VS4Mac.AssetStudio.Views
 
             _filesView.Columns.Add("Images", checkView, new TextCellView(_nameField));
             _filesView.Columns.Add("Weight", new TextCellView(_weightField));
-            _filesView.Columns.Add("Compress Weight", new TextCellView(_compressWeightField));
+            _filesView.Columns.Add("Optimized Weight", new TextCellView(_compressWeightField));
             _filesView.Columns.Add("Percentage", new TextCellView(_percentage));
 
             _filesView.DataSource = _fileStore;
@@ -154,11 +154,11 @@ namespace VS4Mac.AssetStudio.Views
                 return;
             }
 
-            var progressMonitor = IdeApp.Workbench.ProgressMonitors.GetStatusProgressMonitor("Compressing images...", Stock.StatusSolutionOperation, false, true, false);
+            var progressMonitor = IdeApp.Workbench.ProgressMonitors.GetStatusProgressMonitor("Optimizing images...", Stock.StatusSolutionOperation, false, true, false);
 
             Loading(true);
 
-            var selectedImages = new List<CompressImageInfo>();
+            var selectedImages = new List<OptimizeImageInfo>();
 
             for (int i = 0; i < _fileStore.RowCount; i++)
             {
@@ -166,7 +166,7 @@ namespace VS4Mac.AssetStudio.Views
 
                 if (isChecked)
                 {
-                    var compressImageInfo = new CompressImageInfo
+                    var compressImageInfo = new OptimizeImageInfo
                     {
                         ImageId = i,
                         Path = _projectFolder.Path + _fileStore.GetValue(i, _nameField),
@@ -183,11 +183,11 @@ namespace VS4Mac.AssetStudio.Views
             {
                 try
                 {
-                    progressMonitor.Log.WriteLine($"Compressing {Path.GetFileName(selectedImage.Path)}...");
+                    progressMonitor.Log.WriteLine($"Optimizing {Path.GetFileName(selectedImage.Path)}...");
 
                     var originalSize = new FileInfo(selectedImage.Path).Length;
 
-                    var source = await _tinifyService.CompressAsync(selectedImage.Path);
+                    var source = await _tinifyService.OptimizeAsync(selectedImage.Path);
                     _tinifyService.DownloadImage(source.Output.Url, selectedImage.Path);
                     var finalSize = source.Output.Size;
 
@@ -195,11 +195,11 @@ namespace VS4Mac.AssetStudio.Views
                     var percentChange = Math.Round((finalSize - originalSize) * 100.0 / originalSize, 2);
                     _fileStore.SetValue(selectedImage.ImageId, _percentage, $"{percentChange} %");
 
-                    progressMonitor.Log.WriteLine($"Compression complete. {Path.GetFileName(selectedImage.Path)} was {ImageHelper.GetImageSize(originalSize)}, now {ImageHelper.GetImageSize(finalSize)}");
+                    progressMonitor.Log.WriteLine($"Optimization complete. {Path.GetFileName(selectedImage.Path)} was {ImageHelper.GetImageSize(originalSize)}, now {ImageHelper.GetImageSize(finalSize)}");
                 }
                 catch (Exception ex)
                 {
-                    progressMonitor.Log.WriteLine($"An error occurred compressing {Path.GetFileName(selectedImage.Path)}: {ex.Message}");
+                    progressMonitor.Log.WriteLine($"An error occurred optimizing {Path.GetFileName(selectedImage.Path)}: {ex.Message}");
 
                     _fileStore.SetValue(selectedImage.ImageId, _compressWeightField, selectedImage.Weight);
                     _fileStore.SetValue(selectedImage.ImageId, _percentage, "0 %");
@@ -214,7 +214,7 @@ namespace VS4Mac.AssetStudio.Views
 
             if (success)
             {
-                progressMonitor.ReportSuccess("Images compressed successfully.");
+                progressMonitor.ReportSuccess("Images optimized successfully.");
             }
             else
             {

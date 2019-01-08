@@ -4,7 +4,7 @@ using Xwt;
 
 namespace VS4Mac.AssetStudio.Controls
 {
-    public class CompressImageSettingsWidget : VBox
+    public class OptimizeImageSettingsWidget : VBox
     {
         HBox _linkBox;
         Label _apiKeyDescriptionLabel;
@@ -14,7 +14,7 @@ namespace VS4Mac.AssetStudio.Controls
 
         SettingsService _settingsService;
 
-        public CompressImageSettingsWidget()
+        public OptimizeImageSettingsWidget()
         {
             Init();
             BuildGui(); 

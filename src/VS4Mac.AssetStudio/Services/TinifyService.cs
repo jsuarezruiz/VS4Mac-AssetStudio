@@ -53,11 +53,11 @@ namespace VS4Mac.AssetStudio.Services
         }
 
         /// <summary>
-        /// Compress a file on disk.
+        /// Optimize a image file on disk.
         /// </summary>
         /// <param name="pathToFile">Path to the file.</param>
         /// <returns>TinyPngApiResult, <see cref="TinyPngApiResult"/></returns>
-        public async Task<TinyPngApiResult> CompressAsync(string pathToFile)
+        public async Task<TinyPngApiResult> OptimizeAsync(string pathToFile)
         {
             if (string.IsNullOrEmpty(APIKey))
                 throw new InvalidOperationException("You MUST call TinyService.Init (ApiKey); prior to using it.");

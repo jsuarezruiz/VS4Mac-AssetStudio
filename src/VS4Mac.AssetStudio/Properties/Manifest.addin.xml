@@ -11,26 +11,26 @@
     <Extension 
         path="/MonoDevelop/Ide/Commands">
         <Command 
-            id="AssetStudio.Commands.CompressImageCommand" 
-            _label="Compress Image" 
-            defaultHandler="VS4Mac.AssetStudio.Commands.CompressImageCommand" />
+            id="AssetStudio.Commands.OptimizeImageCommand" 
+            _label="Optimize Image" 
+            defaultHandler="VS4Mac.AssetStudio.Commands.OptimizeImageCommand" />
         <Command 
-            id="AssetStudio.Commands.CompressImagesCommand" 
-            _label="Compress Images" 
-            defaultHandler="VS4Mac.AssetStudio.Commands.CompressImagesCommand" />
+            id="AssetStudio.Commands.OptimizeImagesCommand" 
+            _label="Optimize Images" 
+            defaultHandler="VS4Mac.AssetStudio.Commands.OptimizeImagesCommand" />
     </Extension>   
     <Extension 
         path="/MonoDevelop/Ide/ContextMenu/ProjectPad">
         <CommandItem 
-            id="AssetStudio.Commands.CompressImageCommand" />        
+            id="AssetStudio.Commands.OptimizeImageCommand" />        
         <CommandItem 
-            id="AssetStudio.Commands.CompressImagesCommand" />  
+            id="AssetStudio.Commands.OptimizeImagesCommand" />  
     </Extension>
     <Extension 
         path = "/MonoDevelop/Ide/GlobalOptionsDialog/Other">
         <Section 
             id = "Asset Studio" 
             _label = "Asset Studio" 
-            class = "VS4Mac.AssetStudio.Views.CompressImageSettingsPanel" />
+            class = "VS4Mac.AssetStudio.Views.OptimizeImageSettingsPanel" />
     </Extension>
 </Addin>
