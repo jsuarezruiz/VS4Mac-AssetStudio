@@ -4,8 +4,8 @@ using Mono.Addins;
 using Mono.Addins.Description;
 
 [assembly: Addin(
-    "VS4Mac.AssetStudio",
-    Namespace = "VS4Mac.AssetStudio",
+    "AssetStudio",
+    Namespace = "MonoDevelop",
     Version = "0.1", 
     Category = "IDE extensions"
 )]

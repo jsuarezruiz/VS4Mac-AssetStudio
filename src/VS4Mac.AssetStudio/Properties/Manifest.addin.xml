@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <Addin
-    id = "com.jsuarezruiz.assetstudio">
+    id = "MonoDevelop.AssetStudio">
     <Header>
         <Name>Asset Studio Addin</Name>
         <Description>VS4Mac addin with functionality related to assets management.</Description>
-        <Author>Javier Suárez</Author>
-        <Copyright>Javier Suárez</Copyright>
+        <Author>Javier Suárez Ruiz</Author>
+        <Copyright>Javier Suárez Ruiz</Copyright>
         <Url>https://github.com/jsuarezruiz/VSMac-AssetStudio</Url>
     </Header>
     <Extension 
