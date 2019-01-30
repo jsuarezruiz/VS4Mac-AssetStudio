@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Xml.Linq;
 using MonoDevelop.Core;
+using VS4Mac.AssetStudio.Helpers;
 
 namespace VS4Mac.AssetStudio.Services
 {
@@ -32,6 +33,7 @@ namespace VS4Mac.AssetStudio.Services
         {
             var settings = Models.Settings.Default();
 
+            EnsureDocumentSettingsExists(settings);
             var document = XDocument.Load(ConfigurationPath);
 
             if (document.Root == null)
@@ -47,6 +49,14 @@ namespace VS4Mac.AssetStudio.Services
             }
 
             return settings;
+        }
+
+        private void EnsureDocumentSettingsExists(Models.Settings settings)
+        {
+            if (SettingsExists() && XDocumentHelper.CanBeLoaded(ConfigurationPath))
+                return;
+
+            this.Save(settings);
         }
     }
 }
